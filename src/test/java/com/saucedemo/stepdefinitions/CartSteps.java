@@ -17,14 +17,14 @@ public class CartSteps {
 
     private CartPage getCartPage() {
         if (cartPage == null) {
-            cartPage = new CartPage(DriverFactory.getDriver());
+            cartPage = new CartPage();
         }
         return cartPage;
     }
 
     private InventoryPage getInventoryPage() {
         if (inventoryPage == null) {
-            inventoryPage = new InventoryPage(DriverFactory.getDriver());
+            inventoryPage = new InventoryPage();
         }
         return inventoryPage;
     }
