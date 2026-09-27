@@ -14,7 +14,7 @@ on:
       engine_type:
         description: 'Execution Engine (selenium, playwright)'
         required: false
-        default: 'selenium'
+        default: 'playwright'
       browser:
         description: 'Target Browser (chrome, firefox, edge)'
         required: false
@@ -111,8 +111,8 @@ jobs:
             eval "mvn clean test $MAVEN_ARGS"
           else
             mvn clean test \
-              -Dengine="${{ github.event.inputs.engine_type || 'selenium' }}" \
-              -Dengine.type="${{ github.event.inputs.engine_type || 'selenium' }}" \
+              -Dengine="${{ github.event.inputs.engine_type || 'playwright' }}" \
+              -Dengine.type="${{ github.event.inputs.engine_type || 'playwright' }}" \
               -Dbrowser="${{ github.event.inputs.browser || 'chrome' }}" \
               -Dcucumber.filter.tags="${{ github.event.inputs.tags }}" \
               -Dai.provider="${{ github.event.inputs.ai_provider || 'gemini' }}" \
