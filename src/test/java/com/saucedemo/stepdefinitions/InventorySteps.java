@@ -19,14 +19,14 @@ public class InventorySteps {
 
     private InventoryPage getInventoryPage() {
         if (inventoryPage == null) {
-            inventoryPage = new InventoryPage(DriverFactory.getDriver());
+            inventoryPage = new InventoryPage();
         }
         return inventoryPage;
     }
 
     private ProductDetailsPage getProductDetailsPage() {
         if (productDetailsPage == null) {
-            productDetailsPage = new ProductDetailsPage(DriverFactory.getDriver());
+            productDetailsPage = new ProductDetailsPage();
         }
         return productDetailsPage;
     }

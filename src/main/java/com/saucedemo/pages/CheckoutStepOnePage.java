@@ -1,27 +1,45 @@
 package com.saucedemo.pages;
 
+import com.automation.pages.BasePage;
+import com.automation.ai.PageElement;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 /**
- * Page Object representing Checkout Step One - Your Information (/checkout-step-one.html)
+ * Migrated Page Object strictly compliant with Platform SDK Core.
+ * Original Source: CheckoutStepOnePage
  */
 public class CheckoutStepOnePage extends BasePage {
 
-    private final By pageTitle = By.cssSelector("span.title");
-    private final By firstNameInput = By.cssSelector("[data-test='firstName'], #first-name");
-    private final By lastNameInput = By.cssSelector("[data-test='lastName'], #last-name");
-    private final By postalCodeInput = By.cssSelector("[data-test='postalCode'], #postal-code");
-    private final By continueButton = By.cssSelector("[data-test='continue'], #continue");
-    private final By cancelButton = By.cssSelector("[data-test='cancel'], #cancel");
-    private final By errorMessageContainer = By.cssSelector("[data-test='error']");
+    // Registered SDK Page Elements (Self-Healing Enabled)
+    public PageElement pageTitle;
+    public PageElement firstNameInput;
+    public PageElement lastNameInput;
+    public PageElement postalCodeInput;
+    public PageElement continueButton;
+    public PageElement cancelButton;
+    public PageElement errorMessageContainer;
 
-    public CheckoutStepOnePage(WebDriver driver) {
-        super(driver);
+    public CheckoutStepOnePage() {
+        super("CheckoutStepOnePage");
+    }
+
+    public CheckoutStepOnePage(String pageName) {
+        super(pageName);
+    }
+
+    @Override
+    protected void initElements() {
+        pageTitle = register("pageTitle", "pageTitle", By.cssSelector("span.title"));
+        firstNameInput = register("firstNameInput", "firstNameInput", By.cssSelector("[data-test='firstName'], #first-name"));
+        lastNameInput = register("lastNameInput", "lastNameInput", By.cssSelector("[data-test='lastName'], #last-name"));
+        postalCodeInput = register("postalCodeInput", "postalCodeInput", By.cssSelector("[data-test='postalCode'], #postal-code"));
+        continueButton = register("continueButton", "continueButton", By.cssSelector("[data-test='continue'], #continue"));
+        cancelButton = register("cancelButton", "cancelButton", By.cssSelector("[data-test='cancel'], #cancel"));
+        errorMessageContainer = register("errorMessageContainer", "errorMessageContainer", By.cssSelector("[data-test='error']"));
     }
 
     public String getPageTitle() {
-        return getText(pageTitle);
+        return getText(this.pageTitle);
     }
 
     public void enterFirstName(String firstName) {
@@ -51,10 +69,11 @@ public class CheckoutStepOnePage extends BasePage {
     }
 
     public String getErrorMessage() {
-        return getText(errorMessageContainer);
+        return getText(this.errorMessageContainer);
     }
 
     public boolean isErrorMessageDisplayed() {
-        return isDisplayed(errorMessageContainer);
+        return isDisplayed(this.errorMessageContainer);
     }
+
 }
