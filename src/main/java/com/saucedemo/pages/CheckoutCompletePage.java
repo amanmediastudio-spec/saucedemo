@@ -33,7 +33,6 @@ public class CheckoutCompletePage extends BasePage {
     }
 
     public String getPageTitle() {
-        // Note: Playwright auto-waits on action, explicit wait omitted
         return getText(this.pageTitle);
     }
 

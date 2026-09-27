@@ -4,6 +4,7 @@ import com.automation.pages.BasePage;
 import com.automation.ai.PageElement;
 import org.openqa.selenium.By;
 import com.automation.components.WebDriverWait;
+import com.automation.driver.DriverManager;
 import com.saucedemo.utils.ConfigReader;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -103,7 +104,7 @@ public class BasePage extends BasePage {
     }
 
     public boolean isElementPresent(By locator) {
-        return !com.automation.driver.DriverManager.getDriver().findElements(locator).isEmpty();
+        return !com.automation.com.automation.driver.DriverManager.getDriver().DriverManager.getDriver().findElements(locator).isEmpty();
     }
 
     public void selectByVisibleText(By locator, String text) {
@@ -129,7 +130,7 @@ public class BasePage extends BasePage {
     }
 
     public void scrollToElement(By locator) {
-        Locator element = com.automation.driver.DriverManager.getDriver().findElement(locator);
+        // WebDriver instance omitted in Playwright
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
@@ -138,7 +139,7 @@ public class BasePage extends BasePage {
     }
 
     public String getPageSource() {
-        return com.automation.driver.DriverManager.getDriver().getPageSource();
+        return getPage().getPageSource();
     }
 
 }
