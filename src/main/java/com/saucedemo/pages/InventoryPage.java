@@ -3,6 +3,8 @@ package com.saucedemo.pages;
 import com.automation.pages.BasePage;
 import com.automation.ai.PageElement;
 import org.openqa.selenium.By;
+import com.automation.utils.ElementActions;
+import com.automation.driver.DriverManager;
 import org.openqa.selenium.WebElement;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +54,6 @@ public class InventoryPage extends BasePage {
     }
 
     public String getPageTitle() {
-        // Note: Playwright auto-waits on action, explicit wait omitted
         return getText(this.pageTitle);
     }
 
@@ -66,7 +67,7 @@ public class InventoryPage extends BasePage {
 
     public void selectSortOption(String visibleTextOrValue) {
         try {
-            ElementActions.selectByVisibleText(getEffectiveBy(this.sortDropdown), visibleTextOrValue);
+            getEffectiveBy(this.sortDropdown).click();
         } catch (Exception e) {
             selectByValue(sortDropdown, visibleTextOrValue);
         }
@@ -113,14 +114,14 @@ public class InventoryPage extends BasePage {
 
     public boolean isCartBadgeDisplayed() {
         try {
-            com.automation.driver.DriverManager.getDriver().manage().timeouts().implicitlyWait(java.time.Duration.ofMillis(500));
+            getPage().manage().timeouts().implicitlyWait(java.time.Duration.ofMillis(500));
             List<Locator> elements = findElements(cartBadge);
             return !elements.isEmpty() && elements.get(0).isDisplayed();
         } catch (Exception e) {
             return false;
         }
         finally {
-            com.automation.driver.DriverManager.getDriver().manage().timeouts().implicitlyWait(java.time.Duration.ofSeconds(10));
+            getPage().manage().timeouts().implicitlyWait(java.time.Duration.ofSeconds(10));
         }
     }
 
