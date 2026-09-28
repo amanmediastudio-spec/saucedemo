@@ -10,10 +10,10 @@ public class CheckoutStepOnePage extends BasePage {
 
     private final By pageTitle = By.cssSelector("span.title");
     private final By firstNameInput = By.cssSelector("[data-test='firstName'], #first-name");
-    private final By lastNameInput = By.cssSelector("[data-test='lastName'], #last-name");
-    private final By postalCodeInput = By.cssSelector("[data-test='postalCode'], #postal-code");
+    private final By lastNameInput = By.cssSelector("[data-test='lastName'], #l-name");
+    private final By postalCodeInput = By.cssSelector("[data-test='postalCode'], #postal-code-1");
     private final By continueButton = By.cssSelector("[data-test='continue'], #continue");
-    private final By cancelButton = By.cssSelector("[data-test='cancel'], #cancel");
+    private final By cancelButton = By.cssSelector("[data-test='cancel'], #canceel");
     private final By errorMessageContainer = By.cssSelector("[data-test='error']");
 
     public CheckoutStepOnePage(WebDriver driver) {

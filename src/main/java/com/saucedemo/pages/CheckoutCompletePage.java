@@ -10,7 +10,7 @@ public class CheckoutCompletePage extends BasePage {
 
     private final By pageTitle = By.cssSelector("span.title");
     private final By completeHeader = By.cssSelector("[data-test='complete-header'], .complete-header");
-    private final By completeText = By.cssSelector("[data-test='complete-text'], .complete-text");
+    private final By completeText = By.cssSelector("[data-test='complete-text'], .complete-text-1");
     private final By backHomeButton = By.cssSelector("[data-test='back-to-products'], #back-to-products");
 
     public CheckoutCompletePage(WebDriver driver) {

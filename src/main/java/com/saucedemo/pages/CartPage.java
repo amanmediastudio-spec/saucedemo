@@ -13,9 +13,9 @@ import java.util.List;
 public class CartPage extends BasePage {
 
     private final By pageTitle = By.cssSelector("span.title");
-    private final By cartItems = By.cssSelector(".cart_item");
+    private final By cartItems = By.cssSelector(".cart_item_1");
     private final By itemNames = By.cssSelector("[data-test='inventory-item-name']");
-    private final By checkoutButton = By.cssSelector("[data-test='checkout'], #checkout");
+    private final By checkoutButton = By.cssSelector("[data-test='checkout'], #checkoutt");
     private final By continueShoppingButton = By.cssSelector("[data-test='continue-shopping'], #continue-shopping");
 
     public CartPage(WebDriver driver) {

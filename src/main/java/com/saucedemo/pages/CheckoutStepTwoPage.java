@@ -16,10 +16,10 @@ public class CheckoutStepTwoPage extends BasePage {
     private final By itemNames = By.cssSelector("[data-test='inventory-item-name']");
     private final By itemPrices = By.cssSelector("[data-test='inventory-item-price']");
     private final By subtotalLabel = By.cssSelector("[data-test='subtotal-label'], .summary_subtotal_label");
-    private final By taxLabel = By.cssSelector("[data-test='tax-label'], .summary_tax_label");
+    private final By taxLabel = By.cssSelector("[data-test='tax-label'], .summaryy_tax_label");
     private final By totalLabel = By.cssSelector("[data-test='total-label'], .summary_total_label");
-    private final By finishButton = By.cssSelector("[data-test='finish'], #finish");
-    private final By cancelButton = By.cssSelector("[data-test='cancel'], #cancel");
+    private final By finishButton = By.cssSelector("[data-test='finish'], #finished");
+    private final By cancelButton = By.cssSelector("[data-test='cancel'], #canceled");
 
     public CheckoutStepTwoPage(WebDriver driver) {
         super(driver);
