@@ -15,14 +15,14 @@ public class LoginSteps {
 
     private LoginPage getLoginPage() {
         if (loginPage == null) {
-            loginPage = new LoginPage(DriverFactory.getDriver());
+            loginPage = new LoginPage();
         }
         return loginPage;
     }
 
     private InventoryPage getInventoryPage() {
         if (inventoryPage == null) {
-            inventoryPage = new InventoryPage(DriverFactory.getDriver());
+            inventoryPage = new InventoryPage();
         }
         return inventoryPage;
     }

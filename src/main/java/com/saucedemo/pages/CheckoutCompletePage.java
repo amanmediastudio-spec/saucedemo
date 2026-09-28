@@ -1,33 +1,59 @@
 package com.saucedemo.pages;
 
+import com.automation.pages.BasePage;
+import com.automation.ai.PageElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import java.util.List;
+import java.util.ArrayList;
+import com.automation.utils.ElementActions;
+import com.automation.utils.WaitUtils;
+import com.automation.driver.DriverManager;
 
 /**
- * Page Object representing Checkout Complete Page (/checkout-complete.html)
+ * Migrated Page Object strictly compliant with Platform SDK Core.
+ * Original Source: CheckoutCompletePage
  */
 public class CheckoutCompletePage extends BasePage {
 
-    private final By pageTitle = By.cssSelector("span.title");
-    private final By completeHeader = By.cssSelector("[data-test='complete-header'], .complete-header");
-    private final By completeText = By.cssSelector("[data-test='complete-text'], .complete-text");
-    private final By backHomeButton = By.cssSelector("[data-test='back-to-products'], #back-to-products");
+    // Registered SDK Page Elements (Self-Healing Enabled)
+    public PageElement pageTitle;
+    public PageElement completeHeader;
+    public PageElement completeText;
+    public PageElement backHomeButton;
+
+    public CheckoutCompletePage() {
+        super("CheckoutCompletePage");
+    }
+
+    public CheckoutCompletePage(String pageName) {
+        super(pageName);
+    }
 
     public CheckoutCompletePage(WebDriver driver) {
         super(driver);
     }
 
+    @Override
+    protected void initElements() {
+        pageTitle = register("pageTitle", "pageTitle", By.cssSelector("span.title"));
+        completeHeader = register("completeHeader", "completeHeader", By.cssSelector("[data-test='complete-header'], .complete-header"));
+        completeText = register("completeText", "completeText", By.cssSelector("[data-test='complete-text'], .complete-text"));
+        backHomeButton = register("backHomeButton", "backHomeButton", By.cssSelector("[data-test='back-to-products'], #back-to-products"));
+    }
+
     public String getPageTitle() {
-        wait.until(org.openqa.selenium.support.ui.ExpectedConditions.urlContains("checkout-complete.html"));
-        return getText(pageTitle);
+        com.automation.utils.WaitUtils.getWait().until(org.openqa.selenium.support.ui.ExpectedConditions.urlContains("checkout-complete.html"));
+        return getText(this.pageTitle);
     }
 
     public String getCompleteHeader() {
-        return getText(completeHeader);
+        return getText(this.completeHeader);
     }
 
     public String getCompleteText() {
-        return getText(completeText);
+        return getText(this.completeText);
     }
 
     public void clickBackHome() {
@@ -37,4 +63,5 @@ public class CheckoutCompletePage extends BasePage {
     public boolean isOrderComplete() {
         return isDisplayed(completeHeader) && getCompleteHeader().equalsIgnoreCase("Thank you for your order!");
     }
+
 }

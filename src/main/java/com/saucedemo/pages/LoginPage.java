@@ -1,21 +1,48 @@
 package com.saucedemo.pages;
 
+import com.automation.pages.BasePage;
+import com.automation.ai.PageElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import java.util.List;
+import java.util.ArrayList;
+import com.automation.utils.ElementActions;
+import com.automation.utils.WaitUtils;
+import com.automation.driver.DriverManager;
 
 /**
- * Page Object representing SauceDemo Login Page (https://www.saucedemo.com/)
+ * Migrated Page Object strictly compliant with Platform SDK Core.
+ * Original Source: LoginPage
  */
 public class LoginPage extends BasePage {
 
-    private final By usernameInput = By.id("user-name");
-    private final By passwordInput = By.id("password");
-    private final By loginButton = By.id("login-button");
-    private final By errorMessageContainer = By.cssSelector("[data-test='error']");
-    private final By loginLogo = By.cssSelector(".login_logo");
+    // Registered SDK Page Elements (Self-Healing Enabled)
+    public PageElement usernameInput;
+    public PageElement passwordInput;
+    public PageElement loginButton;
+    public PageElement errorMessageContainer;
+    public PageElement loginLogo;
+
+    public LoginPage() {
+        super("LoginPage");
+    }
+
+    public LoginPage(String pageName) {
+        super(pageName);
+    }
 
     public LoginPage(WebDriver driver) {
         super(driver);
+    }
+
+    @Override
+    protected void initElements() {
+        usernameInput = register("usernameInput", "usernameInput", By.id("user-name"));
+        passwordInput = register("passwordInput", "passwordInput", By.id("password"));
+        loginButton = register("loginButton", "loginButton", By.id("login-button"));
+        errorMessageContainer = register("errorMessageContainer", "errorMessageContainer", By.cssSelector("[data-test='error']"));
+        loginLogo = register("loginLogo", "loginLogo", By.cssSelector(".login_logo"));
     }
 
     public void enterUsername(String username) {
@@ -27,7 +54,7 @@ public class LoginPage extends BasePage {
     }
 
     public void clickLogin() {
-        click(loginButton);
+        click(this.loginButton);
     }
 
     public void login(String username, String password) {
@@ -37,11 +64,11 @@ public class LoginPage extends BasePage {
     }
 
     public String getErrorMessage() {
-        return getText(errorMessageContainer);
+        return getText(this.errorMessageContainer);
     }
 
     public boolean isErrorMessageDisplayed() {
-        return isDisplayed(errorMessageContainer);
+        return isDisplayed(this.errorMessageContainer);
     }
 
     public boolean isOnLoginPage() {
@@ -51,4 +78,5 @@ public class LoginPage extends BasePage {
             return false;
         }
     }
+
 }

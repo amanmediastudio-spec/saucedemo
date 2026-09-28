@@ -1,33 +1,59 @@
 package com.saucedemo.pages;
 
+import com.automation.pages.BasePage;
+import com.automation.ai.PageElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
+import com.automation.utils.ElementActions;
+import com.automation.utils.WaitUtils;
+import com.automation.driver.DriverManager;
 
 /**
- * Page Object representing Checkout Step Two - Overview (/checkout-step-two.html)
+ * Migrated Page Object strictly compliant with Platform SDK Core.
+ * Original Source: CheckoutStepTwoPage
  */
 public class CheckoutStepTwoPage extends BasePage {
 
-    private final By pageTitle = By.cssSelector("span.title");
-    private final By itemNames = By.cssSelector("[data-test='inventory-item-name']");
-    private final By itemPrices = By.cssSelector("[data-test='inventory-item-price']");
-    private final By subtotalLabel = By.cssSelector("[data-test='subtotal-label'], .summary_subtotal_label");
-    private final By taxLabel = By.cssSelector("[data-test='tax-label'], .summary_tax_label");
-    private final By totalLabel = By.cssSelector("[data-test='total-label'], .summary_total_label");
-    private final By finishButton = By.cssSelector("[data-test='finish'], #finish");
-    private final By cancelButton = By.cssSelector("[data-test='cancel'], #cancel");
+    // Registered SDK Page Elements (Self-Healing Enabled)
+    public PageElement pageTitle;
+    public PageElement itemNames;
+    public PageElement itemPrices;
+    public PageElement subtotalLabel;
+    public PageElement taxLabel;
+    public PageElement totalLabel;
+    public PageElement finishButton;
+    public PageElement cancelButton;
+
+    public CheckoutStepTwoPage() {
+        super("CheckoutStepTwoPage");
+    }
+
+    public CheckoutStepTwoPage(String pageName) {
+        super(pageName);
+    }
 
     public CheckoutStepTwoPage(WebDriver driver) {
         super(driver);
     }
 
+    @Override
+    protected void initElements() {
+        pageTitle = register("pageTitle", "pageTitle", By.cssSelector("span.title"));
+        itemNames = register("itemNames", "itemNames", By.cssSelector("[data-test='inventory-item-name']"));
+        itemPrices = register("itemPrices", "itemPrices", By.cssSelector("[data-test='inventory-item-price']"));
+        subtotalLabel = register("subtotalLabel", "subtotalLabel", By.cssSelector("[data-test='subtotal-label'], .summary_subtotal_label"));
+        taxLabel = register("taxLabel", "taxLabel", By.cssSelector("[data-test='tax-label'], .summary_tax_label"));
+        totalLabel = register("totalLabel", "totalLabel", By.cssSelector("[data-test='total-label'], .summary_total_label"));
+        finishButton = register("finishButton", "finishButton", By.cssSelector("[data-test='finish'], #finish"));
+        cancelButton = register("cancelButton", "cancelButton", By.cssSelector("[data-test='cancel'], #cancel"));
+    }
+
     public String getPageTitle() {
-        wait.until(org.openqa.selenium.support.ui.ExpectedConditions.urlContains("checkout-step-two.html"));
-        return getText(pageTitle);
+        com.automation.utils.WaitUtils.getWait().until(org.openqa.selenium.support.ui.ExpectedConditions.urlContains("checkout-step-two.html"));
+        return getText(this.pageTitle);
     }
 
     public List<String> getItemNames() {
@@ -50,23 +76,23 @@ public class CheckoutStepTwoPage extends BasePage {
     }
 
     public double getSubtotal() {
-        String text = getText(subtotalLabel);
+        String text = getText(this.subtotalLabel);
         // Format: "Item total: $39.98"
-        String number = text.replaceAll("[^0-9.]", "").trim();
+String number = text.replaceAll("[^0-9.]", "").trim();
         return Double.parseDouble(number);
     }
 
     public double getTax() {
-        String text = getText(taxLabel);
+        String text = getText(this.taxLabel);
         // Format: "Tax: $3.20"
-        String number = text.replaceAll("[^0-9.]", "").trim();
+String number = text.replaceAll("[^0-9.]", "").trim();
         return Double.parseDouble(number);
     }
 
     public double getTotal() {
-        String text = getText(totalLabel);
+        String text = getText(this.totalLabel);
         // Format: "Total: $43.18"
-        String number = text.replaceAll("[^0-9.]", "").trim();
+String number = text.replaceAll("[^0-9.]", "").trim();
         return Double.parseDouble(number);
     }
 
@@ -81,6 +107,7 @@ public class CheckoutStepTwoPage extends BasePage {
     }
 
     public void clickCancel() {
-        click(cancelButton);
+        click(this.cancelButton);
     }
+
 }
