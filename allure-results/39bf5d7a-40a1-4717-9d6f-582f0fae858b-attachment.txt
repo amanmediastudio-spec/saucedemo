@@ -1,0 +1,41 @@
+com.microsoft.playwright.PlaywrightException: Error {
+  message='SyntaxError: Failed to execute 'querySelectorAll' on 'Document': 'PlaywrightPageElement[LoginPage.usernameInput | selector=#user-name]' is not a valid selector.
+    at query (<anonymous>:3426:41)
+    at <anonymous>:3436:7
+    at SelectorEvaluatorImpl._cached (<anonymous>:3213:20)
+    at SelectorEvaluatorImpl._queryCSS (<anonymous>:3423:17)
+    at SelectorEvaluatorImpl._querySimple (<anonymous>:3303:19)
+    at <anonymous>:3251:29
+    at SelectorEvaluatorImpl._cached (<anonymous>:3213:20)
+    at SelectorEvaluatorImpl.query (<anonymous>:3244:19)
+    at Object.query (<anonymous>:3458:44)
+    at <anonymous>:3416:21
+  name='Error
+  stack='Error: SyntaxError: Failed to execute 'querySelectorAll' on 'Document': 'PlaywrightPageElement[LoginPage.usernameInput | selector=#user-name]' is not a valid selector.
+    at query (<anonymous>:3426:41)
+    at <anonymous>:3436:7
+    at SelectorEvaluatorImpl._cached (<anonymous>:3213:20)
+    at SelectorEvaluatorImpl._queryCSS (<anonymous>:3423:17)
+    at SelectorEvaluatorImpl._querySimple (<anonymous>:3303:19)
+    at <anonymous>:3251:29
+    at SelectorEvaluatorImpl._cached (<anonymous>:3213:20)
+    at SelectorEvaluatorImpl.query (<anonymous>:3244:19)
+    at Object.query (<anonymous>:3458:44)
+    at <anonymous>:3416:21
+    at CRExecutionContext.evaluateWithArguments (C:\Users\parve\AppData\Local\Temp\playwright-java-4229451931694624771\package\lib\server\chromium\crExecutionContext.js:92:33)
+    at async LongStandingScope._race (C:\Users\parve\AppData\Local\Temp\playwright-java-4229451931694624771\package\lib\utils\manualPromise.js:96:14)
+    at async evaluateExpression (C:\Users\parve\AppData\Local\Temp\playwright-java-4229451931694624771\package\lib\server\javascript.js:242:12)
+    at async C:\Users\parve\AppData\Local\Temp\playwright-java-4229451931694624771\package\lib\server\frames.js:953:22
+    at async Frame.retryWithProgressAndTimeouts (C:\Users\parve\AppData\Local\Temp\playwright-java-4229451931694624771\package\lib\server\frames.js:923:24)
+    at async C:\Users\parve\AppData\Local\Temp\playwright-java-4229451931694624771\package\lib\server\frames.js:1053:29
+    at async ProgressController.run (C:\Users\parve\AppData\Local\Temp\playwright-java-4229451931694624771\package\lib\server\progress.js:82:22)
+    at async FrameDispatcher.fill (C:\Users\parve\AppData\Local\Temp\playwright-java-4229451931694624771\package\lib\server\dispatchers\frameDispatcher.js:169:12)
+    at async LongStandingScope._race (C:\Users\parve\AppData\Local\Temp\playwright-java-4229451931694624771\package\lib\utils\manualPromise.js:96:14)
+    at async FrameDispatcher._handleCommand (C:\Users\parve\AppData\Local\Temp\playwright-java-4229451931694624771\package\lib\server\dispatchers\dispatcher.js:96:14)
+}
+Call log:
+- waiting for locator("PlaywrightPageElement[LoginPage.usernameInput | selector=#user-name]").first()
+
+	at com.microsoft.playwright.impl.WaitableResult.get(WaitableResult.java:56)
+	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:120)
+... 122 more framework frames hidden

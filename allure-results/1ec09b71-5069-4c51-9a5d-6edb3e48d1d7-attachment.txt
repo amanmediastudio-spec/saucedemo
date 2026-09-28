@@ -1,0 +1,20 @@
+{
+  "reportTitle" : "AI Pre-Flight Element Validation & Healing Audit Report",
+  "generatedAt" : "2026-09-28 19:30:29",
+  "totalElementsInspected" : 1,
+  "healedElementsCount" : 0,
+  "validElementsCount" : 1,
+  "records" : [ {
+    "timestamp" : "2026-09-28 19:30:18.049",
+    "description" : "loginButton",
+    "status" : "VALID",
+    "elementName" : "loginButton",
+    "strategy" : "DIRECT_MATCH",
+    "runId" : null,
+    "pageName" : "LoginPage",
+    "confidenceScore" : "100%",
+    "filePath" : "LoginPage.java",
+    "toLocator" : "#login-button",
+    "fromLocator" : "#login-button"
+  } ]
+}

@@ -1,0 +1,1 @@
+No broken element locators were healed during this session.

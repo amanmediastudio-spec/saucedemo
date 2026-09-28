@@ -1,29 +1,56 @@
 package com.saucedemo.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
-import java.util.ArrayList;
+import com.automation.playwright.PlaywrightBasePage;
+import com.automation.playwright.PlaywrightPageElement;
+import com.microsoft.playwright.Locator;
 import java.util.List;
+import org.openqa.selenium.By;
+import java.util.ArrayList;
 
 /**
- * Page Object representing SauceDemo Cart Page (/cart.html)
+ * Migrated Playwright Page Object strictly compliant with the Platform SDK.
+ * Original Source: CartPage
  */
-public class CartPage extends BasePage {
+public class CartPage extends PlaywrightBasePage {
 
-    private final By pageTitle = By.cssSelector("span.title");
-    private final By cartItems = By.cssSelector(".cart_item_1");
-    private final By itemNames = By.cssSelector("[data-test='inventory-item-name']");
-    private final By checkoutButton = By.cssSelector("[data-test='checkout'], #checkoutt");
-    private final By continueShoppingButton = By.cssSelector("[data-test='continue-shopping'], #continue-shopping");
+    // Registered Playwright Elements
+    public PlaywrightPageElement pageTitle;
+    public PlaywrightPageElement cartItems;
+    public PlaywrightPageElement itemNames;
+    public PlaywrightPageElement checkoutButton;
+    public PlaywrightPageElement continueShoppingButton;
 
-    public CartPage(WebDriver driver) {
-        super(driver);
+    public CartPage() {
+        super("CartPage");
+    }
+
+    public CartPage(String pageName) {
+        super(pageName);
+    }
+
+    public CartPage(Object legacyDriver) {
+        super("CartPage", legacyDriver);
+    }
+
+    public CartPage(String pageName, Object legacyDriver) {
+        super(pageName, legacyDriver);
+    }
+
+    public CartPage(Object legacyDriver, String pageName) {
+        super(legacyDriver, pageName);
+    }
+
+    @Override
+    protected void initElements() {
+        pageTitle = register("pageTitle", "pageTitle", "span.title");
+        cartItems = register("cartItems", "cartItems", ".cart_item_1");
+        itemNames = register("itemNames", "itemNames", "[data-test='inventory-item-name']");
+        checkoutButton = register("checkoutButton", "checkoutButton", "[data-test='checkout'], #checkoutt");
+        continueShoppingButton = register("continueShoppingButton", "continueShoppingButton", "[data-test='continue-shopping'], #continue-shopping");
     }
 
     public String getPageTitle() {
-        wait.until(org.openqa.selenium.support.ui.ExpectedConditions.urlContains("cart.html"));
+        // Note: Playwright auto-waits on action, explicit wait omitted
         return getText(pageTitle);
     }
 
@@ -31,16 +58,16 @@ public class CartPage extends BasePage {
         if (!isElementPresent(cartItems)) {
             return new ArrayList<>();
         }
-        List<WebElement> elements = driver.findElements(itemNames);
+        List<Locator> elements = findElements(itemNames);
         List<String> names = new ArrayList<>();
-        for (WebElement el : elements) {
-            names.add(el.getText().trim());
+        for (Locator el : elements) {
+            names.add(el.innerText().trim());
         }
         return names;
     }
 
     public int getItemCount() {
-        return driver.findElements(cartItems).size();
+        return count(cartItems);
     }
 
     public boolean isItemInCart(String productName) {
@@ -59,4 +86,5 @@ public class CartPage extends BasePage {
     public void clickContinueShopping() {
         jsClick(continueShoppingButton);
     }
+
 }
