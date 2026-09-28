@@ -1,36 +1,70 @@
 package com.saucedemo.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
-import java.util.ArrayList;
+import com.automation.playwright.PlaywrightBasePage;
+import com.automation.playwright.PlaywrightPageElement;
+import com.microsoft.playwright.Locator;
 import java.util.List;
+import org.openqa.selenium.By;
+import java.util.ArrayList;
 
 /**
- * Page Object representing SauceDemo Products / Inventory Page (/inventory.html)
+ * Migrated Playwright Page Object strictly compliant with the Platform SDK.
+ * Original Source: InventoryPage
  */
-public class InventoryPage extends BasePage {
+public class InventoryPage extends PlaywrightBasePage {
 
-    private final By pageTitle = By.cssSelector("span.title");
-    private final By inventoryContainer = By.id("inventory_container");
-    private final By inventoryItems = By.cssSelector(".inventory_item");
-    private final By sortDropdown = By.cssSelector("[data-test='product-sort-container']");
-    private final By cartBadge = By.cssSelector("[data-test='shopping-cart-badge']");
-    private final By cartLink = By.cssSelector("[data-test='shopping-cart-link']");
-    private final By burgerMenuButton = By.id("react-burger-menu-btn");
-    private final By logoutLink = By.id("logout_sidebar_link");
-    private final By resetAppStateLink = By.id("reset_sidebar_link");
-    private final By closeMenuButton = By.id("react-burger-cross-btn");
-    private final By itemNames = By.cssSelector("[data-test='inventory-item-name']");
-    private final By itemPrices = By.cssSelector("[data-test='inventory-item-price']");
+    // Registered Playwright Elements
+    public PlaywrightPageElement pageTitle;
+    public PlaywrightPageElement inventoryContainer;
+    public PlaywrightPageElement inventoryItems;
+    public PlaywrightPageElement sortDropdown;
+    public PlaywrightPageElement cartBadge;
+    public PlaywrightPageElement cartLink;
+    public PlaywrightPageElement burgerMenuButton;
+    public PlaywrightPageElement logoutLink;
+    public PlaywrightPageElement resetAppStateLink;
+    public PlaywrightPageElement closeMenuButton;
+    public PlaywrightPageElement itemNames;
+    public PlaywrightPageElement itemPrices;
 
-    public InventoryPage(WebDriver driver) {
-        super(driver);
+    public InventoryPage() {
+        super("InventoryPage");
+    }
+
+    public InventoryPage(String pageName) {
+        super(pageName);
+    }
+
+    public InventoryPage(Object legacyDriver) {
+        super("InventoryPage", legacyDriver);
+    }
+
+    public InventoryPage(String pageName, Object legacyDriver) {
+        super(pageName, legacyDriver);
+    }
+
+    public InventoryPage(Object legacyDriver, String pageName) {
+        super(legacyDriver, pageName);
+    }
+
+    @Override
+    protected void initElements() {
+        pageTitle = register("pageTitle", "pageTitle", "span.title");
+        inventoryContainer = register("inventoryContainer", "inventoryContainer", "#inventory_container");
+        inventoryItems = register("inventoryItems", "inventoryItems", ".inventory_item");
+        sortDropdown = register("sortDropdown", "sortDropdown", "[data-test='product-sort-container']");
+        cartBadge = register("cartBadge", "cartBadge", "[data-test='shopping-cart-badge']");
+        cartLink = register("cartLink", "cartLink", "[data-test='shopping-cart-link']");
+        burgerMenuButton = register("burgerMenuButton", "burgerMenuButton", "#react-burger-menu-btn");
+        logoutLink = register("logoutLink", "logoutLink", "#logout_sidebar_link");
+        resetAppStateLink = register("resetAppStateLink", "resetAppStateLink", "#reset_sidebar_link");
+        closeMenuButton = register("closeMenuButton", "closeMenuButton", "#react-burger-cross-btn");
+        itemNames = register("itemNames", "itemNames", "[data-test='inventory-item-name']");
+        itemPrices = register("itemPrices", "itemPrices", "[data-test='inventory-item-price']");
     }
 
     public String getPageTitle() {
-        wait.until(org.openqa.selenium.support.ui.ExpectedConditions.urlContains("inventory.html"));
+        // Note: Playwright auto-waits on action, explicit wait omitted
         return getText(pageTitle);
     }
 
@@ -43,28 +77,27 @@ public class InventoryPage extends BasePage {
     }
 
     public void selectSortOption(String visibleTextOrValue) {
-        // Support either visible text like "Price (low to high)" or code "lohi"
         try {
-            selectByVisibleText(sortDropdown, visibleTextOrValue);
+            selectOption(sortDropdown, visibleTextOrValue);
         } catch (Exception e) {
             selectByValue(sortDropdown, visibleTextOrValue);
         }
     }
 
     public List<String> getItemNames() {
-        List<WebElement> elements = findElements(itemNames);
+        List<Locator> elements = findElements(itemNames);
         List<String> names = new ArrayList<>();
-        for (WebElement el : elements) {
-            names.add(el.getText().trim());
+        for (Locator el : elements) {
+            names.add(el.innerText().trim());
         }
         return names;
     }
 
     public List<Double> getItemPrices() {
-        List<WebElement> elements = findElements(itemPrices);
+        List<Locator> elements = findElements(itemPrices);
         List<Double> prices = new ArrayList<>();
-        for (WebElement el : elements) {
-            String rawPrice = el.getText().replace("$", "").trim();
+        for (Locator el : elements) {
+            String rawPrice = el.innerText().replace("$", "").trim();
             prices.add(Double.parseDouble(rawPrice));
         }
         return prices;
@@ -82,7 +115,7 @@ public class InventoryPage extends BasePage {
 
     public boolean isRemoveButtonDisplayed(String productName) {
         By removeLocator = By.xpath("//div[@class='inventory_item'][.//div[normalize-space()='" + productName + "']]//button[contains(@data-test,'remove') or text()='Remove']");
-        return isDisplayed(removeLocator);
+        return isVisible(removeLocator);
     }
 
     public void clickProductTitle(String productName) {
@@ -92,27 +125,27 @@ public class InventoryPage extends BasePage {
 
     public boolean isCartBadgeDisplayed() {
         try {
-            driver.manage().timeouts().implicitlyWait(java.time.Duration.ofMillis(500));
-            List<WebElement> elements = driver.findElements(cartBadge);
-            return !elements.isEmpty() && elements.get(0).isDisplayed();
+            // Note: Playwright manages timeouts automatically
+            List<Locator> elements = findElements(cartBadge);
+            return !elements.isEmpty() && elements.get(0).isVisible();
         } catch (Exception e) {
             return false;
         } finally {
-            driver.manage().timeouts().implicitlyWait(java.time.Duration.ofSeconds(10));
+            // Note: Playwright manages timeouts automatically
         }
     }
 
     public boolean waitForCartBadgeToDisappear() {
         try {
-            return wait.until(org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated(cartBadge));
+            return isElementHidden(cartBadge);
         } catch (Exception e) {
             return !isCartBadgeDisplayed();
         }
     }
 
     public int getCartBadgeCount() {
-        WebElement badge = waitForVisibility(cartBadge);
-        return Integer.parseInt(badge.getText().trim());
+        Locator badge = waitForVisibility(cartBadge);
+        return Integer.parseInt(badge.innerText().trim());
     }
 
     public void clickCart() {
@@ -134,4 +167,5 @@ public class InventoryPage extends BasePage {
         click(resetAppStateLink);
         click(closeMenuButton);
     }
+
 }

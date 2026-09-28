@@ -1,0 +1,80 @@
+{
+  "reportTitle" : "AI Pre-Flight Element Validation & Healing Audit Report",
+  "generatedAt" : "2026-09-28 22:22:04",
+  "totalElementsInspected" : 6,
+  "healedElementsCount" : 0,
+  "validElementsCount" : 6,
+  "records" : [ {
+    "description" : "loginButton",
+    "timestamp" : "2026-09-28 22:21:50.407",
+    "status" : "VALID",
+    "elementName" : "loginButton",
+    "strategy" : "DIRECT_MATCH",
+    "confidenceScore" : "100%",
+    "pageName" : "LoginPage",
+    "toLocator" : "#login-button",
+    "filePath" : "LoginPage.java",
+    "fromLocator" : "#login-button",
+    "runId" : null
+  }, {
+    "description" : "usernameInput",
+    "timestamp" : "2026-09-28 22:21:51.509",
+    "status" : "VALID",
+    "elementName" : "usernameInput",
+    "strategy" : "DIRECT_MATCH",
+    "confidenceScore" : "100%",
+    "pageName" : "LoginPage",
+    "toLocator" : "#user-name",
+    "filePath" : "LoginPage.java",
+    "fromLocator" : "#user-name",
+    "runId" : null
+  }, {
+    "description" : "passwordInput",
+    "timestamp" : "2026-09-28 22:21:52.535",
+    "status" : "VALID",
+    "elementName" : "passwordInput",
+    "strategy" : "DIRECT_MATCH",
+    "confidenceScore" : "100%",
+    "pageName" : "LoginPage",
+    "toLocator" : "#password",
+    "filePath" : "LoginPage.java",
+    "fromLocator" : "#password",
+    "runId" : null
+  }, {
+    "description" : "pageTitle",
+    "timestamp" : "2026-09-28 22:21:54.452",
+    "status" : "VALID",
+    "elementName" : "pageTitle",
+    "strategy" : "DIRECT_MATCH",
+    "confidenceScore" : "100%",
+    "pageName" : "InventoryPage",
+    "toLocator" : "span.title",
+    "filePath" : "InventoryPage.java",
+    "fromLocator" : "span.title",
+    "runId" : null
+  }, {
+    "description" : "inventoryContainer",
+    "timestamp" : "2026-09-28 22:21:54.510",
+    "status" : "VALID",
+    "elementName" : "inventoryContainer",
+    "strategy" : "DIRECT_MATCH",
+    "confidenceScore" : "100%",
+    "pageName" : "InventoryPage",
+    "toLocator" : "#inventory_container",
+    "filePath" : "InventoryPage.java",
+    "fromLocator" : "#inventory_container",
+    "runId" : null
+  }, {
+    "description" : "inventoryItems",
+    "timestamp" : "2026-09-28 22:21:54.513",
+    "status" : "VALID",
+    "elementName" : "inventoryItems",
+    "strategy" : "DIRECT_MATCH",
+    "confidenceScore" : "100%",
+    "pageName" : "InventoryPage",
+    "toLocator" : ".inventory_item",
+    "filePath" : "InventoryPage.java",
+    "fromLocator" : ".inventory_item",
+    "runId" : null
+  } ]
+}
