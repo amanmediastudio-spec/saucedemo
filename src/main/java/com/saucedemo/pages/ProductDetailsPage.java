@@ -1,23 +1,52 @@
 package com.saucedemo.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import com.automation.playwright.PlaywrightBasePage;
+import com.automation.playwright.PlaywrightPageElement;
 
 /**
- * Page Object representing SauceDemo Product Details Page (/inventory-item.html)
+ * Migrated Playwright Page Object strictly compliant with the Platform SDK.
+ * Original Source: ProductDetailsPage
  */
-public class ProductDetailsPage extends BasePage {
+public class ProductDetailsPage extends PlaywrightBasePage {
 
-    private final By productName = By.cssSelector(".inventory_details_name, [data-test='inventory-item-name']");
-    private final By productDescription = By.cssSelector(".inventory_details_desc, [data-test='inventory-item-desc']");
-    private final By productPrice = By.cssSelector(".inventory_details_price, [data-test='inventory-item-price']");
-    private final By addToCartButton = By.cssSelector("button[data-test^='add-to-cart']");
-    private final By removeButton = By.cssSelector("button[data-test^='remove']");
-    private final By backToProductsButton = By.cssSelector("[data-test='back-to-products'], #back-to-products");
-    private final By cartBadge = By.cssSelector("[data-test='shopping-cart-badge']");
+    // Registered Playwright Elements
+    public PlaywrightPageElement productName;
+    public PlaywrightPageElement productDescription;
+    public PlaywrightPageElement productPrice;
+    public PlaywrightPageElement addToCartButton;
+    public PlaywrightPageElement removeButton;
+    public PlaywrightPageElement backToProductsButton;
+    public PlaywrightPageElement cartBadge;
 
-    public ProductDetailsPage(WebDriver driver) {
-        super(driver);
+    public ProductDetailsPage() {
+        super("ProductDetailsPage");
+    }
+
+    public ProductDetailsPage(String pageName) {
+        super(pageName);
+    }
+
+    public ProductDetailsPage(Object legacyDriver) {
+        super("ProductDetailsPage", legacyDriver);
+    }
+
+    public ProductDetailsPage(String pageName, Object legacyDriver) {
+        super(pageName, legacyDriver);
+    }
+
+    public ProductDetailsPage(Object legacyDriver, String pageName) {
+        super(legacyDriver, pageName);
+    }
+
+    @Override
+    protected void initElements() {
+        productName = register("productName", "productName", ".inventory_details_name, [data-test='inventory-item-name']");
+        productDescription = register("productDescription", "productDescription", ".inventory_details_desc, [data-test='inventory-item-desc']");
+        productPrice = register("productPrice", "productPrice", ".inventory_details_price, [data-test='inventory-item-price']");
+        addToCartButton = register("addToCartButton", "addToCartButton", "button[data-test^='add-to-cart']");
+        removeButton = register("removeButton", "removeButton", "button[data-test^='remove']");
+        backToProductsButton = register("backToProductsButton", "backToProductsButton", "[data-test='back-to-products'], #back-to-products");
+        cartBadge = register("cartBadge", "cartBadge", "[data-test='shopping-cart-badge']");
     }
 
     public String getProductName() {
@@ -45,15 +74,15 @@ public class ProductDetailsPage extends BasePage {
     }
 
     public boolean isAddToCartButtonDisplayed() {
-        return isDisplayed(addToCartButton);
+        return isVisible(addToCartButton);
     }
 
     public boolean isRemoveButtonDisplayed() {
-        return isDisplayed(removeButton);
+        return isVisible(removeButton);
     }
 
     public boolean isCartBadgeDisplayed() {
-        return isDisplayed(cartBadge);
+        return isVisible(cartBadge);
     }
 
     public int getCartBadgeCount() {
@@ -62,4 +91,5 @@ public class ProductDetailsPage extends BasePage {
         }
         return Integer.parseInt(getText(cartBadge));
     }
+
 }
