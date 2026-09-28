@@ -16,14 +16,16 @@ public class Hooks {
 
     @Before
     public void setUp(Scenario scenario) {
-        WebDriver driver = DriverFactory.initDriver();
+        // Browser lifecycle managed by Platform Core SDK PlaywrightHooks
+            com.automation.playwright.PlaywrightManager.getPage();
         String baseUrl = ConfigReader.getProperty("baseUrl", "https://www.saucedemo.com");
-        driver.get(baseUrl);
+            com.automation.playwright.PlaywrightManager.navigate(baseUrl);
     }
 
     @After
     public void tearDown(Scenario scenario) {
-        WebDriver driver = DriverFactory.getDriver();
+        WebDriver driver = // DriverFactory call neutralized for Playwright
+            null;
         if (driver != null) {
             try {
                 if (scenario.isFailed()) {
@@ -33,7 +35,8 @@ public class Hooks {
             } catch (Exception e) {
                 System.err.println("Could not capture screenshot: " + e.getMessage());
             } finally {
-                DriverFactory.quitDriver();
+                // Browser teardown managed by Platform SDK Core PlaywrightHooks
+            // DriverFactory.quitDriver();
             }
         }
     }
