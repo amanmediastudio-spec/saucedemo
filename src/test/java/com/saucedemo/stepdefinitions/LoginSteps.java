@@ -1,5 +1,7 @@
 package com.saucedemo.stepdefinitions;
 
+import com.automation.utils.ElementActions;
+
 import com.saucedemo.driver.DriverFactory;
 import com.saucedemo.pages.InventoryPage;
 import com.saucedemo.pages.LoginPage;
@@ -15,14 +17,14 @@ public class LoginSteps {
 
     private LoginPage getLoginPage() {
         if (loginPage == null) {
-            loginPage = new LoginPage(DriverFactory.getDriver());
+            loginPage = new LoginPage();
         }
         return loginPage;
     }
 
     private InventoryPage getInventoryPage() {
         if (inventoryPage == null) {
-            inventoryPage = new InventoryPage(DriverFactory.getDriver());
+            inventoryPage = new InventoryPage();
         }
         return inventoryPage;
     }
@@ -79,7 +81,7 @@ public class LoginSteps {
     public void the_user_should_be_redirected_to_the_inventory_page() {
         new org.openqa.selenium.support.ui.WebDriverWait(DriverFactory.getDriver(), java.time.Duration.ofSeconds(10))
                 .until(org.openqa.selenium.support.ui.ExpectedConditions.urlContains("inventory.html"));
-        String currentUrl = DriverFactory.getDriver().getCurrentUrl();
+        String currentUrl = ElementActions.getCurrentUrl();
         Assert.assertTrue(currentUrl.contains("inventory.html"), "URL does not contain 'inventory.html'. Current URL: " + currentUrl);
     }
 
