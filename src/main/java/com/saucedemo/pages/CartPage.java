@@ -1,37 +1,56 @@
 package com.saucedemo.pages;
 
+import com.automation.pages.BasePage;
+import com.automation.ai.PageElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
+import com.automation.utils.ElementActions;
+import com.automation.utils.WaitUtils;
+import com.automation.driver.DriverManager;
 
 /**
- * Page Object representing SauceDemo Cart Page (/cart.html)
+ * Migrated Page Object strictly compliant with Platform SDK Core.
+ * Original Source: CartPage
  */
 public class CartPage extends BasePage {
 
-    private final By pageTitle = By.cssSelector("span.title");
-    private final By cartItems = By.cssSelector(".cart_item_1");
-    private final By itemNames = By.cssSelector("[data-test='inventory-item-name']");
-    private final By checkoutButton = By.cssSelector("[data-test='checkout'], #checkoutt");
-    private final By continueShoppingButton = By.cssSelector("[data-test='continue-shopping'], #continue-shopping");
+    // Registered SDK Page Elements (Self-Healing Enabled)
+    public PageElement pageTitle;
+    public PageElement cartItems;
+    public PageElement itemNames;
+    public PageElement checkoutButton;
+    public PageElement continueShoppingButton;
 
-    public CartPage(WebDriver driver) {
-        super(driver);
+    public CartPage() {
+        super("CartPage");
+    }
+
+    public CartPage(String pageName) {
+        super(pageName);
+    }
+
+    @Override
+    protected void initElements() {
+        pageTitle = register("pageTitle", "pageTitle", By.cssSelector("span.title"));
+        cartItems = register("cartItems", "cartItems", By.cssSelector(".cart_item_1"));
+        itemNames = register("itemNames", "itemNames", By.cssSelector("[data-test='inventory-item-name']"));
+        checkoutButton = register("checkoutButton", "checkoutButton", By.cssSelector("[data-test='checkout'], #checkoutt"));
+        continueShoppingButton = register("continueShoppingButton", "continueShoppingButton", By.cssSelector("[data-test='continue-shopping'], #continue-shopping"));
     }
 
     public String getPageTitle() {
-        wait.until(org.openqa.selenium.support.ui.ExpectedConditions.urlContains("cart.html"));
-        return getText(pageTitle);
+        com.automation.utils.WaitUtils.getWait().until(org.openqa.selenium.support.ui.ExpectedConditions.urlContains("cart.html"));
+        return getText(this.pageTitle);
     }
 
     public List<String> getCartItemNames() {
         if (!isElementPresent(cartItems)) {
             return new ArrayList<>();
         }
-        List<WebElement> elements = driver.findElements(itemNames);
+        List<WebElement> elements = findElements(itemNames);
         List<String> names = new ArrayList<>();
         for (WebElement el : elements) {
             names.add(el.getText().trim());
@@ -40,7 +59,7 @@ public class CartPage extends BasePage {
     }
 
     public int getItemCount() {
-        return driver.findElements(cartItems).size();
+        return findElements(cartItems).size();
     }
 
     public boolean isItemInCart(String productName) {
@@ -59,4 +78,5 @@ public class CartPage extends BasePage {
     public void clickContinueShopping() {
         jsClick(continueShoppingButton);
     }
+
 }
