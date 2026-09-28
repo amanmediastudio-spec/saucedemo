@@ -1,5 +1,7 @@
 package com.saucedemo.stepdefinitions;
 
+import com.automation.driver.DriverManager;
+
 import com.saucedemo.driver.DriverFactory;
 import com.saucedemo.utils.ConfigReader;
 import io.cucumber.java.After;
@@ -16,7 +18,7 @@ public class Hooks {
 
     @Before
     public void setUp(Scenario scenario) {
-        WebDriver driver = DriverFactory.initDriver();
+        WebDriver driver = com.automation.driver.DriverManager.getDriver();
         String baseUrl = ConfigReader.getProperty("baseUrl", "https://www.saucedemo.com");
         driver.get(baseUrl);
     }
@@ -33,7 +35,8 @@ public class Hooks {
             } catch (Exception e) {
                 System.err.println("Could not capture screenshot: " + e.getMessage());
             } finally {
-                DriverFactory.quitDriver();
+                // Driver teardown & video upload managed by Platform SDK Core SeleniumHooks
+            // DriverFactory.quitDriver();
             }
         }
     }
