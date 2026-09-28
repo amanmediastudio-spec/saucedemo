@@ -21,7 +21,29 @@
         <surefire.version>3.2.5</surefire.version>
     </properties>
 
+    <repositories>
+            <repository>
+                <id>healqa-local-repo</id>
+                <name>HealQA Embedded Core Repository</name>
+                <url>file://${project.basedir}/.repo</url>
+                <releases><enabled>true</enabled><checksumPolicy>ignore</checksumPolicy></releases>
+                <snapshots><enabled>false</enabled></snapshots>
+            </repository>
+    </repositories>
+
     <dependencies>
+        <dependency>
+    <groupId>com.microsoft.playwright</groupId>
+    <artifactId>playwright</artifactId>
+    <version>1.45.0</version>
+        </dependency>
+
+        <dependency>
+    <groupId>com.automation</groupId>
+    <artifactId>ai-automation-core</artifactId>
+    <version>1.2.0</version>
+        </dependency>
+
         <!-- Selenium Java (Includes built-in Selenium Manager for automated driver management) -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
