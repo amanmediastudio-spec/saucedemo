@@ -1,37 +1,63 @@
 package com.saucedemo.pages;
 
+import com.automation.pages.BasePage;
+import com.automation.ai.PageElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
+import com.automation.utils.ElementActions;
+import com.automation.utils.WaitUtils;
+import com.automation.driver.DriverManager;
 
 /**
- * Page Object representing SauceDemo Products / Inventory Page (/inventory.html)
+ * Migrated Page Object strictly compliant with Platform SDK Core.
+ * Original Source: InventoryPage
  */
 public class InventoryPage extends BasePage {
 
-    private final By pageTitle = By.cssSelector("span.title");
-    private final By inventoryContainer = By.id("inventory_container");
-    private final By inventoryItems = By.cssSelector(".inventory_item");
-    private final By sortDropdown = By.cssSelector("[data-test='product-sort-container']");
-    private final By cartBadge = By.cssSelector("[data-test='shopping-cart-badge']");
-    private final By cartLink = By.cssSelector("[data-test='shopping-cart-link']");
-    private final By burgerMenuButton = By.id("react-burger-menu-btn");
-    private final By logoutLink = By.id("logout_sidebar_link");
-    private final By resetAppStateLink = By.id("reset_sidebar_link");
-    private final By closeMenuButton = By.id("react-burger-cross-btn");
-    private final By itemNames = By.cssSelector("[data-test='inventory-item-name']");
-    private final By itemPrices = By.cssSelector("[data-test='inventory-item-price']");
+    // Registered SDK Page Elements (Self-Healing Enabled)
+    public PageElement pageTitle;
+    public PageElement inventoryContainer;
+    public PageElement inventoryItems;
+    public PageElement sortDropdown;
+    public PageElement cartBadge;
+    public PageElement cartLink;
+    public PageElement burgerMenuButton;
+    public PageElement logoutLink;
+    public PageElement resetAppStateLink;
+    public PageElement closeMenuButton;
+    public PageElement itemNames;
+    public PageElement itemPrices;
 
-    public InventoryPage(WebDriver driver) {
-        super(driver);
+    public InventoryPage() {
+        super("InventoryPage");
+    }
+
+    public InventoryPage(String pageName) {
+        super(pageName);
+    }
+
+    @Override
+    protected void initElements() {
+        pageTitle = register("pageTitle", "pageTitle", By.cssSelector("span.title"));
+        inventoryContainer = register("inventoryContainer", "inventoryContainer", By.id("inventory_container"));
+        inventoryItems = register("inventoryItems", "inventoryItems", By.cssSelector(".inventory_item"));
+        sortDropdown = register("sortDropdown", "sortDropdown", By.cssSelector("[data-test='product-sort-container']"));
+        cartBadge = register("cartBadge", "cartBadge", By.cssSelector("[data-test='shopping-cart-badge']"));
+        cartLink = register("cartLink", "cartLink", By.cssSelector("[data-test='shopping-cart-link']"));
+        burgerMenuButton = register("burgerMenuButton", "burgerMenuButton", By.id("react-burger-menu-btn"));
+        logoutLink = register("logoutLink", "logoutLink", By.id("logout_sidebar_link"));
+        resetAppStateLink = register("resetAppStateLink", "resetAppStateLink", By.id("reset_sidebar_link"));
+        closeMenuButton = register("closeMenuButton", "closeMenuButton", By.id("react-burger-cross-btn"));
+        itemNames = register("itemNames", "itemNames", By.cssSelector("[data-test='inventory-item-name']"));
+        itemPrices = register("itemPrices", "itemPrices", By.cssSelector("[data-test='inventory-item-price']"));
     }
 
     public String getPageTitle() {
-        wait.until(org.openqa.selenium.support.ui.ExpectedConditions.urlContains("inventory.html"));
-        return getText(pageTitle);
+        com.automation.utils.WaitUtils.getWait().until(org.openqa.selenium.support.ui.ExpectedConditions.urlContains("inventory.html"));
+        return getText(this.pageTitle);
     }
 
     public boolean isProductCatalogDisplayed() {
@@ -43,9 +69,8 @@ public class InventoryPage extends BasePage {
     }
 
     public void selectSortOption(String visibleTextOrValue) {
-        // Support either visible text like "Price (low to high)" or code "lohi"
         try {
-            selectByVisibleText(sortDropdown, visibleTextOrValue);
+            selectByVisibleText(this.sortDropdown, visibleTextOrValue);
         } catch (Exception e) {
             selectByValue(sortDropdown, visibleTextOrValue);
         }
@@ -92,19 +117,20 @@ public class InventoryPage extends BasePage {
 
     public boolean isCartBadgeDisplayed() {
         try {
-            driver.manage().timeouts().implicitlyWait(java.time.Duration.ofMillis(500));
-            List<WebElement> elements = driver.findElements(cartBadge);
+            com.automation.driver.DriverManager.getDriver().manage().timeouts().implicitlyWait(java.time.Duration.ofMillis(500));
+            List<WebElement> elements = findElements(cartBadge);
             return !elements.isEmpty() && elements.get(0).isDisplayed();
         } catch (Exception e) {
             return false;
-        } finally {
-            driver.manage().timeouts().implicitlyWait(java.time.Duration.ofSeconds(10));
+        }
+        finally {
+            com.automation.driver.DriverManager.getDriver().manage().timeouts().implicitlyWait(java.time.Duration.ofSeconds(10));
         }
     }
 
     public boolean waitForCartBadgeToDisappear() {
         try {
-            return wait.until(org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated(cartBadge));
+            return com.automation.utils.WaitUtils.getWait().until(org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated(cartBadge));
         } catch (Exception e) {
             return !isCartBadgeDisplayed();
         }
@@ -116,11 +142,11 @@ public class InventoryPage extends BasePage {
     }
 
     public void clickCart() {
-        click(cartLink);
+        click(this.cartLink);
     }
 
     public void openSidebarMenu() {
-        click(burgerMenuButton);
+        click(this.burgerMenuButton);
         waitForVisibility(logoutLink);
     }
 
@@ -131,7 +157,8 @@ public class InventoryPage extends BasePage {
 
     public void resetAppState() {
         openSidebarMenu();
-        click(resetAppStateLink);
-        click(closeMenuButton);
+        click(this.resetAppStateLink);
+        click(this.closeMenuButton);
     }
+
 }
