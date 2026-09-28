@@ -1,21 +1,36 @@
 package com.saucedemo.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import com.automation.playwright.PlaywrightBasePage;
+import com.automation.playwright.PlaywrightPageElement;
 
 /**
- * Page Object representing SauceDemo Login Page (https://www.saucedemo.com/)
+ * Migrated Playwright Page Object strictly compliant with the Platform SDK.
+ * Original Source: LoginPage
  */
-public class LoginPage extends BasePage {
+public class LoginPage extends PlaywrightBasePage {
 
-    private final By usernameInput = By.id("user-name");
-    private final By passwordInput = By.id("password");
-    private final By loginButton = By.id("login-button");
-    private final By errorMessageContainer = By.cssSelector("[data-test='error']");
-    private final By loginLogo = By.cssSelector(".login_logo");
+    // Registered Playwright Elements
+    public PlaywrightPageElement usernameInput;
+    public PlaywrightPageElement passwordInput;
+    public PlaywrightPageElement loginButton;
+    public PlaywrightPageElement errorMessageContainer;
+    public PlaywrightPageElement loginLogo;
 
-    public LoginPage(WebDriver driver) {
-        super(driver);
+    public LoginPage() {
+        super("LoginPage");
+    }
+
+    public LoginPage(String pageName) {
+        super(pageName);
+    }
+
+    @Override
+    protected void initElements() {
+        usernameInput = register("usernameInput", "usernameInput", "#user-name");
+        passwordInput = register("passwordInput", "passwordInput", "#password");
+        loginButton = register("loginButton", "loginButton", "#login-button");
+        errorMessageContainer = register("errorMessageContainer", "errorMessageContainer", "[data-test='error']");
+        loginLogo = register("loginLogo", "loginLogo", ".login_logo");
     }
 
     public void enterUsername(String username) {
@@ -41,7 +56,7 @@ public class LoginPage extends BasePage {
     }
 
     public boolean isErrorMessageDisplayed() {
-        return isDisplayed(errorMessageContainer);
+        return isVisible(errorMessageContainer);
     }
 
     public boolean isOnLoginPage() {
@@ -51,4 +66,5 @@ public class LoginPage extends BasePage {
             return false;
         }
     }
+
 }
