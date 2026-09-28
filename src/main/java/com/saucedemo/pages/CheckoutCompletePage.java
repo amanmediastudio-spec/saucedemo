@@ -1,24 +1,50 @@
 package com.saucedemo.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import com.automation.playwright.PlaywrightBasePage;
+import com.automation.playwright.PlaywrightPageElement;
 
 /**
- * Page Object representing Checkout Complete Page (/checkout-complete.html)
+ * Migrated Playwright Page Object strictly compliant with the Platform SDK.
+ * Original Source: CheckoutCompletePage
  */
-public class CheckoutCompletePage extends BasePage {
+public class CheckoutCompletePage extends PlaywrightBasePage {
 
-    private final By pageTitle = By.cssSelector("span.title");
-    private final By completeHeader = By.cssSelector("[data-test='complete-header'], .complete-header");
-    private final By completeText = By.cssSelector("[data-test='complete-text'], .complete-text");
-    private final By backHomeButton = By.cssSelector("[data-test='back-to-products'], #back-to-products");
+    // Registered Playwright Elements
+    public PlaywrightPageElement pageTitle;
+    public PlaywrightPageElement completeHeader;
+    public PlaywrightPageElement completeText;
+    public PlaywrightPageElement backHomeButton;
 
-    public CheckoutCompletePage(WebDriver driver) {
-        super(driver);
+    public CheckoutCompletePage() {
+        super("CheckoutCompletePage");
+    }
+
+    public CheckoutCompletePage(String pageName) {
+        super(pageName);
+    }
+
+    public CheckoutCompletePage(Object legacyDriver) {
+        super("CheckoutCompletePage", legacyDriver);
+    }
+
+    public CheckoutCompletePage(String pageName, Object legacyDriver) {
+        super(pageName, legacyDriver);
+    }
+
+    public CheckoutCompletePage(Object legacyDriver, String pageName) {
+        super(legacyDriver, pageName);
+    }
+
+    @Override
+    protected void initElements() {
+        pageTitle = register("pageTitle", "pageTitle", "span.title");
+        completeHeader = register("completeHeader", "completeHeader", "[data-test='complete-header'], .complete-header");
+        completeText = register("completeText", "completeText", "[data-test='complete-text'], .complete-text");
+        backHomeButton = register("backHomeButton", "backHomeButton", "[data-test='back-to-products'], #back-to-products");
     }
 
     public String getPageTitle() {
-        wait.until(org.openqa.selenium.support.ui.ExpectedConditions.urlContains("checkout-complete.html"));
+        // Note: Playwright auto-waits on action, explicit wait omitted
         return getText(pageTitle);
     }
 
@@ -37,4 +63,5 @@ public class CheckoutCompletePage extends BasePage {
     public boolean isOrderComplete() {
         return isDisplayed(completeHeader) && getCompleteHeader().equalsIgnoreCase("Thank you for your order!");
     }
+
 }
