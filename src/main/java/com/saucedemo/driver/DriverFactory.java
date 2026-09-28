@@ -1,5 +1,7 @@
 package com.saucedemo.driver;
 
+import com.automation.driver.DriverManager;
+
 import com.saucedemo.utils.ConfigReader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -19,10 +21,20 @@ public class DriverFactory {
     private static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
 
     public static WebDriver getDriver() {
+        WebDriver sdkDriver = com.automation.driver.DriverManager.getDriver();
+        if (sdkDriver != null) {
+            return sdkDriver;
+        }
+
         return driverThreadLocal.get();
     }
 
     public static WebDriver initDriver() {
+        WebDriver sdkDriver = com.automation.driver.DriverManager.getDriver();
+        if (sdkDriver != null) {
+            return sdkDriver;
+        }
+
         String browser = ConfigReader.getProperty("browser", "chrome").toLowerCase();
         boolean headless = ConfigReader.getBooleanProperty("headless", true);
         int implicitWait = ConfigReader.getIntProperty("implicitWait", 10);
@@ -76,6 +88,10 @@ public class DriverFactory {
     }
 
     public static void quitDriver() {
+        if (com.automation.driver.DriverManager.getDriver() != null) {
+            return; // Lifecycle governed by Platform SDK Core SeleniumHooks
+        }
+
         WebDriver driver = driverThreadLocal.get();
         if (driver != null) {
             try {
