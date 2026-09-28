@@ -20,28 +20,28 @@ public class CheckoutSteps {
 
     private CheckoutStepOnePage getStepOnePage() {
         if (stepOnePage == null) {
-            stepOnePage = new CheckoutStepOnePage(DriverFactory.getDriver());
+            stepOnePage = new CheckoutStepOnePage();
         }
         return stepOnePage;
     }
 
     private CheckoutStepTwoPage getStepTwoPage() {
         if (stepTwoPage == null) {
-            stepTwoPage = new CheckoutStepTwoPage(DriverFactory.getDriver());
+            stepTwoPage = new CheckoutStepTwoPage();
         }
         return stepTwoPage;
     }
 
     private CheckoutCompletePage getCompletePage() {
         if (completePage == null) {
-            completePage = new CheckoutCompletePage(DriverFactory.getDriver());
+            completePage = new CheckoutCompletePage();
         }
         return completePage;
     }
 
     private InventoryPage getInventoryPage() {
         if (inventoryPage == null) {
-            inventoryPage = new InventoryPage(DriverFactory.getDriver());
+            inventoryPage = new InventoryPage();
         }
         return inventoryPage;
     }

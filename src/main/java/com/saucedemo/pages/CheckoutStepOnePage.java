@@ -1,23 +1,52 @@
 package com.saucedemo.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import com.automation.playwright.PlaywrightBasePage;
+import com.automation.playwright.PlaywrightPageElement;
 
 /**
- * Page Object representing Checkout Step One - Your Information (/checkout-step-one.html)
+ * Migrated Playwright Page Object strictly compliant with the Platform SDK.
+ * Original Source: CheckoutStepOnePage
  */
-public class CheckoutStepOnePage extends BasePage {
+public class CheckoutStepOnePage extends PlaywrightBasePage {
 
-    private final By pageTitle = By.cssSelector("span.title");
-    private final By firstNameInput = By.cssSelector("[data-test='firstName'], #first-name");
-    private final By lastNameInput = By.cssSelector("[data-test='lastName'], #last-name");
-    private final By postalCodeInput = By.cssSelector("[data-test='postalCode'], #postal-code");
-    private final By continueButton = By.cssSelector("[data-test='continue'], #continue");
-    private final By cancelButton = By.cssSelector("[data-test='cancel'], #cancel");
-    private final By errorMessageContainer = By.cssSelector("[data-test='error']");
+    // Registered Playwright Elements
+    public PlaywrightPageElement pageTitle;
+    public PlaywrightPageElement firstNameInput;
+    public PlaywrightPageElement lastNameInput;
+    public PlaywrightPageElement postalCodeInput;
+    public PlaywrightPageElement continueButton;
+    public PlaywrightPageElement cancelButton;
+    public PlaywrightPageElement errorMessageContainer;
 
-    public CheckoutStepOnePage(WebDriver driver) {
-        super(driver);
+    public CheckoutStepOnePage() {
+        super("CheckoutStepOnePage");
+    }
+
+    public CheckoutStepOnePage(String pageName) {
+        super(pageName);
+    }
+
+    public CheckoutStepOnePage(Object legacyDriver) {
+        super("CheckoutStepOnePage", legacyDriver);
+    }
+
+    public CheckoutStepOnePage(String pageName, Object legacyDriver) {
+        super(pageName, legacyDriver);
+    }
+
+    public CheckoutStepOnePage(Object legacyDriver, String pageName) {
+        super(legacyDriver, pageName);
+    }
+
+    @Override
+    protected void initElements() {
+        pageTitle = register("pageTitle", "pageTitle", "span.title");
+        firstNameInput = register("firstNameInput", "firstNameInput", "[data-test='firstName'], #first-name");
+        lastNameInput = register("lastNameInput", "lastNameInput", "[data-test='lastName'], #last-name");
+        postalCodeInput = register("postalCodeInput", "postalCodeInput", "[data-test='postalCode'], #postal-code");
+        continueButton = register("continueButton", "continueButton", "[data-test='continue'], #continue");
+        cancelButton = register("cancelButton", "cancelButton", "[data-test='cancel'], #cancel");
+        errorMessageContainer = register("errorMessageContainer", "errorMessageContainer", "[data-test='error']");
     }
 
     public String getPageTitle() {
@@ -55,6 +84,7 @@ public class CheckoutStepOnePage extends BasePage {
     }
 
     public boolean isErrorMessageDisplayed() {
-        return isDisplayed(errorMessageContainer);
+        return isVisible(errorMessageContainer);
     }
+
 }
